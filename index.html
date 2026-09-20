@@ -2,29 +2,183 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>سایت من</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پلتفرم گفتگو و ورود</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Tahoma, sans-serif;
+        }
+        body {
+            background-color: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .main-container {
+            width: 100%;
+            max-width: 450px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            background: #4a90e2;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .auth-section, .chat-section {
+            padding: 20px;
+        }
+        .auth-section h2 {
+            margin-bottom: 15px;
+            font-size: 16px;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+            font-size: 14px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            outline: none;
+        }
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: #357abd;
+        }
+        .chat-box {
+            height: 250px;
+            border: 1px solid #eee;
+            border-radius: 6px;
+            padding: 10px;
+            overflow-y: scroll;
+            background: #fafafa;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .message {
+            padding: 8px 12px;
+            border-radius: 8px;
+            max-width: 75%;
+            font-size: 14px;
+        }
+        .message.incoming {
+            background: #e2e2e2;
+            align-self: flex-start;
+            color: #333;
+        }
+        .message.outgoing {
+            background: #4a90e2;
+            align-self: flex-end;
+            color: white;
+        }
+        .chat-input-area {
+            display: flex;
+            gap: 10px;
+        }
+        .chat-input-area input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            outline: none;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
-    <h1>سلام! خوش آمدید به سایت من</h1>
-    <p>این صفحه با استفاده از گیت‌هاب ساخته شده است.</p>
-</body>
-</html>
-<form>
-    <label for="username">نام کاربری:</label>
-    <input type="text" id="username" name="username" required>
-    <br>
-    <label for="password">رمز عبور:</label>
-    <input type="password" id="password" name="password" required>
-    <br>
-    <button type="submit">ورود</button>
-</form>
-<div class="chat-container" style="max-width: 400px; margin: 20px auto; border: 1px solid #ccc; border-radius: 8px; overflow: hidden; font-family: Tahoma, sans-serif;">
-    <div class="chat-header" style="background: #007bff; color: white; padding: 10px; text-align: center;">گفتگو</div>
-    <div class="chat-box" style="height: 300px; padding: 10px; overflow-y: scroll; background: #f9f9f9; display: flex; flex-direction: column; gap: 10px;">
-        <div class="message incoming" style="background: #e2e2e2; padding: 8px 12px; border-radius: 8px; max-width: 70%; align-self: flex-start;">سلام! چطور می‌توانم کمکتان کنم؟</div>
+
+<div class="main-container">
+    <div class="header">ورود و گفتگو</div>
+
+    <!-- فرم ورود -->
+    <div class="auth-section">
+        <h2>صفحه ورود</h2>
+        <form>
+            <div class="form-group">
+                <label for="username">نام کاربری:</label>
+                <input type="text" id="username" name="username" required placeholder="نام کاربری خود را وارد کنید">
+            </div>
+            <div class="form-group">
+                <label for="password">رمز عبور:</label>
+                <input type="password" id="password" name="password" required placeholder="رمز عبور خود را وارد کنید">
+            </div>
+            <button type="submit" class="btn">ورود</button>
+        </form>
     </div>
-    <div class="chat-input" style="display: border-top: 1px solid #ccc; display: flex;">
-        <input type="text" placeholder="پیام خود را بنویسید..." style="flex: 1; padding: 10px; border: none; outline: none;">
-        <button type="button" style="background: #007bff; color: white; border: none; padding: 10px 15px; cursor: pointer;">ارسال</button>
+
+    <hr style="border: none; border-top: 1px solid #eee;">
+
+    <!-- بخش گفتگو -->
+    <div class="chat-section">
+        <h2 style="font-size: 16px; margin-bottom: 10px; color: #333;">گفتگو</h2>
+        <div class="chat-box" id="chatBox">
+            <div class="message incoming">سلام! خوش آمدید. چطور می‌توانم کمکتان کنم؟</div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="پیام خود را بنویسید...">
+            <button type="button" class="btn" style="width: auto; padding: 10px 15px;" onclick="sendMessage()">ارسال</button>
+        </div>
     </div>
 </div>
+
+<script>
+    function sendMessage() {
+        const input = document.getElementById('chatInput');
+        const chatBox = document.getElementById('chatBox');
+        
+        if (input.value.trim() !== "") {
+            // ایجاد پیام کاربر
+            const userMsg = document.createElement('div');
+            userMsg.className = 'message outgoing';
+            userMsg.textContent = input.value;
+            chatBox.appendChild(userMsg);
+            
+            input.value = "";
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // پاسخ خودکار ربات پس از یک ثانیه
+            setTimeout(() => {
+                const botMsg = document.createElement('div');
+                botMsg.className = 'message incoming';
+                botMsg.textContent = 'پیام شما دریافت شد!';
+                chatBox.appendChild(botMsg);
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 1000);
+        }
+    }
+</script>
+
+</body>
+</html>
